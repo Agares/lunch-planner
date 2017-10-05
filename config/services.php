@@ -3,6 +3,9 @@
 declare(strict_types=1);
 
 return [
+	'routes' => [
+		'literal' => require __DIR__.'/routes.php'
+	],
 	\Lunch\Infrastructure\TemplateRenderer::class     => [
 		'parameters' => [
 			\Mustache_Engine::class,
