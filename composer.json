@@ -1,0 +1,34 @@
+{
+    "name": "agares/lunch",
+    "type": "project",
+    "prefer-stable": true,
+    "minimum-stability": "dev",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "agares",
+            "email": "me@agares.info"
+        }
+    ],
+    "require": {
+        "roave/security-advisories": "dev-master",
+        "mustache/mustache": "^2.9",
+        "nikic/fast-route": "^1.2",
+        "php-di/php-di": "^5.4",
+        "zendframework/zend-diactoros": "^1.6",
+        "ramsey/uuid": "^3.7"
+    },
+    "require-dev": {
+        "phpspec/phpspec": "^4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Lunch\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "spec\\Lunch\\": "spec/"
+        }
+    }
+}

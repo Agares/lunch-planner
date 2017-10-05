@@ -1,0 +1,4 @@
+suites:
+  lunch_suite:
+    namespace: Lunch
+    psr4_prefix: Lunch
