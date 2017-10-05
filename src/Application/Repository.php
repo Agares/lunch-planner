@@ -9,4 +9,5 @@ use Lunch\Domain\Lunch;
 interface Repository
 {
     public function save(Lunch $lunch): void;
+    public function findById(string $id): Lunch;
 }

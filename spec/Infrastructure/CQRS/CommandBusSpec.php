@@ -6,7 +6,7 @@ namespace spec\Lunch\Infrastructure\CQRS;
 
 use Lunch\Infrastructure\CQRS\CommandBus;
 use Lunch\Infrastructure\CQRS\CommandHandler;
-use Lunch\Infrastructure\CQRS\HandlerNotFound;
+use Lunch\Infrastructure\CQRS\CommandHandlerNotFound;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
@@ -43,6 +43,6 @@ final class CommandBusSpec extends ObjectBehavior
 
 	public function it_throws_if_there_is_no_handler_for_command()
 	{
-		$this->shouldThrow(HandlerNotFound::class)->during('execute', [new MockCommandA()]);
+		$this->shouldThrow(CommandHandlerNotFound::class)->during('execute', [new MockCommandA()]);
 	}
 }

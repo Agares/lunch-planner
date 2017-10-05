@@ -50,11 +50,17 @@ final class Lunch implements Identifiable
     	$this->potentialPlaces[$place->name()] = $place;
     }
 
+	/**
+	 * @return Participant[]
+	 */
 	public function participants(): array
 	{
 		return array_values($this->participants);
 	}
 
+	/**
+	 * @return PotentialPlace[]
+	 */
 	public function potentialPlaces(): array
 	{
 		return array_values($this->potentialPlaces);

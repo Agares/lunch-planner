@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Lunch\Infrastructure\CQRS;
 
-final class HandlerNotFound extends \RuntimeException
+final class CommandHandlerNotFound extends \RuntimeException
 {
 	public function __construct(string $className)
 	{

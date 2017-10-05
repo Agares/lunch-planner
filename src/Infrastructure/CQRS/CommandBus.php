@@ -19,7 +19,7 @@ class CommandBus
 	    $commandClassName = get_class($command);
 
 	    if(!isset($this->handlers[$commandClassName])) {
-	    	throw new HandlerNotFound($commandClassName);
+	    	throw new CommandHandlerNotFound($commandClassName);
 	    }
 
 	    $this->handlers[$commandClassName]->handle($command);

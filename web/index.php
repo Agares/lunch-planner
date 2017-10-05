@@ -61,7 +61,7 @@ $dispatcher = \FastRoute\simpleDispatcher(function(\FastRoute\RouteCollector $co
 					$handleParameters = [];
 					$handleParameterReflections = $handleMethodReflection->getParameters();
 					foreach ($handleParameterReflections as $parameterReflection) {
-						if(((string)$parameterReflection->getType()) === \Psr\Http\Message\RequestInterface::class) {
+						if(((string)$parameterReflection->getType()) === \Psr\Http\Message\ServerRequestInterface::class) {
 							$handleParameters[] = $request;
 						} else {
 							$handleParameters[] = $arguments[$parameterReflection->getName()];

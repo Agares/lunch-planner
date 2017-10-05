@@ -1,18 +1,9 @@
-<!DOCTYPE html>
-<html>
-    <head>
-    </head>
+<form action="{{ createLunchUrl }}" method="post" class="create_lunch">
+    <fieldset>
+        <legend>Create a lunch</legend>
+        <label for="create_lunch_lunch_name">Lunch name: </label>
+        <input type="text" name="lunch_name" id="create_lunch_lunch_name" />
 
-    <body>
-        <h1>Lunch planner</h1>
-        <form action="{{ createLunchUrl }}" method="post" class="create_lunch">
-            <fieldset>
-                <legend>Create a lunch</legend>
-                <label for="create_lunch_lunch_name">Lunch name: </label>
-                <input type="text" name="lunch_name" id="create_lunch_lunch_name" />
-
-                <button>Go</button>
-            </fieldset>
-        </form>
-    </body>
-</html>
+        <button>Go</button>
+    </fieldset>
+</form>

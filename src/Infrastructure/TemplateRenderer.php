@@ -18,8 +18,21 @@ final class TemplateRenderer
 
 	public function render(string $templateName, $context = []): string
 	{
-		$template = file_get_contents(__DIR__.sprintf('/../../templates/%s.mustache', $templateName));
+		$layoutTemplate = $this->readTemplate('layout');
+		$contentTemplate = $this->readTemplate($templateName);
 
-		return $this->mustacheEngine->render($template, $context);
+		$content = $this->mustacheEngine->render($contentTemplate, $context);
+
+		return $this->mustacheEngine->render($layoutTemplate, ['content' => $content]);
+	}
+
+	/**
+	 * @param string $templateName
+	 *
+	 * @return bool|string
+	 */
+	protected function readTemplate(string $templateName)
+	{
+		return file_get_contents(__DIR__.sprintf('/../../templates/%s.mustache', $templateName));
 	}
 }
