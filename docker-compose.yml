@@ -15,3 +15,17 @@ services:
       - .:/var/www/lunch
     environment:
       - LUNCH_ENV
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - POSTGRES_DB
+    depends_on:
+      - db
+
+  db:
+    build: docker/db/
+    environment:
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - POSTGRES_DB
+    volumes:
+      - ./data/db:/var/lib/postgresql/data/

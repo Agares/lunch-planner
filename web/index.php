@@ -19,7 +19,11 @@ $serviceDefinitions = [
 ];
 
 foreach($services as $serviceName => $serviceConfiguration) {
-	$definition = \DI\object($serviceConfiguration['className'] ?? $serviceName);
+	if(isset($serviceConfiguration['create'])) {
+		$definition = \DI\factory($serviceConfiguration['create']);
+	} else {
+		$definition = \DI\object($serviceConfiguration['className'] ?? $serviceName);
+	}
 
 	if(isset($serviceConfiguration['parameters'])) {
 		$constructorParameters = array_map('\DI\get', $serviceConfiguration['parameters']);

@@ -16,7 +16,8 @@
         "nikic/fast-route": "^1.2",
         "php-di/php-di": "^5.4",
         "zendframework/zend-diactoros": "^1.6",
-        "ramsey/uuid": "^3.7"
+        "ramsey/uuid": "^3.7",
+        "robmorgan/phinx": "^0.4"
     },
     "require-dev": {
         "phpspec/phpspec": "^4.0"

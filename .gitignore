@@ -2,3 +2,4 @@ vendor/
 data/
 .env
 composer.phar
+docker-compose.override.yml
