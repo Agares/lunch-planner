@@ -37,7 +37,7 @@ final class Homepage
 		$response = $this->templateRenderer->render(
 			'home',
 			[
-				'createLunchUrl' => $this->urlGenerator->getPath('lunch.create')
+				'createLunchUrl' => $this->urlGenerator->generate('lunch.create')
 			]
 		);
 

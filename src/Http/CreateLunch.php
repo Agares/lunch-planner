@@ -51,7 +51,7 @@ final class CreateLunch
 		$lunchId = (string)$this->uuidFactory->generateRandom();
 		$this->commandBus->execute(new \Lunch\Application\CreateLunch($lunchId, $request->getParsedBody()['lunch_name']));
 
-		$lunchUrl = $this->urlGenerator->getPath('lunch.show', [$lunchId]);
+		$lunchUrl = $this->urlGenerator->generate('lunch.show', [$lunchId]);
 
 		return $this->responseFactory->redirect($lunchUrl);
 	}

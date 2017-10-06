@@ -19,7 +19,8 @@ final class UrlGenerator
 		$this->routes = $routes;
 	}
 
-	public function getPath(string $routeName, array $params = array()): string
+	// todo support named parameters
+	public function generate(string $routeName, array $params = array()): string
 	{
 		// this code is adapted from https://github.com/nikic/FastRoute/issues/66
 

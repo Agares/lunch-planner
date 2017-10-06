@@ -8,6 +8,7 @@ use Lunch\Application\Repository;
 use Lunch\Domain\Lunch;
 use Lunch\Domain\Participant;
 use Lunch\Domain\PotentialPlace;
+use Lunch\Domain\Vote;
 
 final class PDORepository implements Repository
 {
@@ -32,12 +33,18 @@ final class PDORepository implements Repository
 
 		$participants = array_map(function(Participant $x) { return $x->name(); }, $lunch->participants());
 		$potentialPlaces = array_map(function(PotentialPlace $x) { return $x->name(); }, $lunch->potentialPlaces());
+		$votes = array_map(function(Vote $vote) {
+			return [
+				'place' => $vote->potentialPlace()->name(),
+				'participant' => $vote->participant()->name()
+			];
+		}, $lunch->votes());
 
 		$statement->bindValue(':id', (string)$lunch->getId());
 		$statement->bindValue(':name', $lunch->name());
 		$statement->bindValue(':participants', json_encode($participants));
 		$statement->bindValue(':potentialPlaces', json_encode($potentialPlaces));
-		$statement->bindValue(':votes', json_encode($lunch->votes()));
+		$statement->bindValue(':votes', json_encode($votes));
 
 		$statement->execute();
 	}

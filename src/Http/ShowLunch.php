@@ -49,7 +49,7 @@ final class ShowLunch
 		$this->queryBus = $queryBus;
 	}
 
-	public function handle(ServerRequestInterface $request, $id): ResponseInterface
+	public function handle(string $id): ResponseInterface
 	{
 		$matrix = $this->queryBus->handle(new ReadLunchMatrix($id));
 
@@ -57,8 +57,9 @@ final class ShowLunch
 			'show',
 			[
 				'matrix' => $matrix,
-				'addParticipantLink' => $this->urlGenerator->getPath('lunch.participants.add', [$id]),
-				'addPotentialPlaceLink' => $this->urlGenerator->getPath('lunch.potential_places.add', [$id])
+				'addParticipantLink' => $this->urlGenerator->generate('lunch.participants.add', [$id]),
+				'addPotentialPlaceLink' => $this->urlGenerator->generate('lunch.potential_places.add', [$id]),
+				'voteLink' => $this->urlGenerator->generate('lunch.vote', [$id])
 			]
 		);
 

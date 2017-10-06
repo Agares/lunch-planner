@@ -42,6 +42,6 @@ final class AddParticipant
 	{
 		$this->commandBus->execute(new \Lunch\Application\AddParticipant($id, $request->getParsedBody()['name']));
 
-		return $this->responseFactory->redirect($this->urlGenerator->getPath('lunch.show', [$id]));
+		return $this->responseFactory->redirect($this->urlGenerator->generate('lunch.show', [$id]));
 	}
 }

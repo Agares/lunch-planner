@@ -17,3 +17,35 @@
         <button>Add</button>
     </fieldset>
 </form>
+
+<table>
+    <thead>
+        <tr>
+            <th>Participant</th>
+            {{#matrix.potentialPlaces}}
+                <th>{{.}}</th>
+            {{/matrix.potentialPlaces}}
+        </tr>
+    </thead>
+    <tbody>
+        {{#matrix.participants}}
+            <tr>
+                <td>{{name}}</td>
+                {{#votes}}
+                    <td>
+                        {{#value}}Yes{{/value}}
+                        {{^value}}
+                            <form action="{{{voteLink}}}" method="post">
+                                <input type="hidden" name="participant_name" value="{{name}}" />
+                                <input type="hidden" name="potential_place_name" value="{{potentialPlaceName}}" />
+
+                                <button>Vote</button>
+                            </form>
+                            No
+                        {{/value}}
+                    </td>
+                {{/votes}}
+            </tr>
+        {{/matrix.participants}}
+    </tbody>
+</table>

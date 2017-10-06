@@ -55,11 +55,19 @@ return [
 			\Lunch\Infrastructure\CQRS\CommandBus::class
 		]
 	],
+	\Lunch\Http\Vote::class => [
+		'parameters' => [
+			\Lunch\Infrastructure\Http\ResponseFactory::class,
+			\Lunch\Infrastructure\Http\UrlGenerator::class,
+			\Lunch\Infrastructure\CQRS\CommandBus::class
+		]
+	],
 	\Lunch\Infrastructure\CQRS\CommandBus::class      => [
 		'methodCalls' => [
 			['registerHandler', [\Lunch\Application\CreateLunchHandler::class]],
 			['registerHandler', [\Lunch\Application\AddParticipantHandler::class]],
 			['registerHandler', [\Lunch\Application\AddPotentialPlaceHandler::class]],
+			['registerHandler', [\Lunch\Application\VoteHandler::class]],
 		],
 	],
 	\Lunch\Application\CreateLunchHandler::class      => [
@@ -73,6 +81,11 @@ return [
 		],
 	],
 	\Lunch\Application\AddPotentialPlaceHandler::class      => [
+		'parameters' => [
+			\Lunch\Application\Repository::class,
+		],
+	],
+	\Lunch\Application\VoteHandler::class      => [
 		'parameters' => [
 			\Lunch\Application\Repository::class,
 		],

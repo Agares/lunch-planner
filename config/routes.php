@@ -27,5 +27,10 @@ return [
 		'path' => '/lunches/{id}/potential_places',
 		'handler' => \Lunch\Http\AddPotentialPlace::class,
 		'method' => 'POST'
+	],
+	'lunch.vote' => [
+		'path' => '/lunches/{id}/votes',
+		'handler' => \Lunch\Http\Vote::class,
+		'method' => 'POST'
 	]
 ];
