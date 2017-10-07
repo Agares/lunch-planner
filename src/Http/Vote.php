@@ -7,6 +7,7 @@ namespace Lunch\Http;
 use Lunch\Infrastructure\CQRS\CommandBus;
 use Lunch\Infrastructure\Http\ResponseFactory;
 use Lunch\Infrastructure\Http\UrlGenerator;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 final class Vote
@@ -33,7 +34,7 @@ final class Vote
 		$this->commandBus = $commandBus;
 	}
 
-	public function handle(ServerRequestInterface $request, $id)
+	public function handle(ServerRequestInterface $request, $id): ResponseInterface
 	{
 		$formParams = $request->getParsedBody();
 		$participantName = $formParams['participant_name'];

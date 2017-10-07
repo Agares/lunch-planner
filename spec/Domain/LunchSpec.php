@@ -5,7 +5,9 @@ namespace spec\Lunch\Domain;
 use Lunch\Domain\Identifiable;
 use Lunch\Domain\Lunch;
 use Lunch\Domain\Participant;
+use Lunch\Domain\ParticipantDoesNotExist;
 use Lunch\Domain\PotentialPlace;
+use Lunch\Domain\PotentialPlaceDoesNotExist;
 use Lunch\Domain\Vote;
 use Lunch\Infrastructure\UUIDFactory;
 use PhpSpec\ObjectBehavior;
@@ -85,5 +87,19 @@ class LunchSpec extends ObjectBehavior
 	public function it_has_name()
 	{
 		$this->name()->shouldReturn('Lunch 2017-10-03');
+	}
+
+	public function it_throws_when_voting_on_not_existant_potential_place()
+	{
+		$this->addParticipant(Participant::withName('Josey'));
+
+		$this->shouldThrow(PotentialPlaceDoesNotExist::class)->during('vote', ['Josey', 'Mexican place']);
+	}
+
+	public function it_throws_when_voting_by_a_participant_that_does_not_exist()
+	{
+		$this->addPotentialPlace(PotentialPlace::withName('test'));
+
+		$this->shouldThrow(ParticipantDoesNotExist::class)->during('vote', ['Josey', 'test']);
 	}
 }

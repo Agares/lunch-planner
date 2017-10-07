@@ -68,10 +68,11 @@ final class Lunch implements Identifiable
 
     public function vote(string $participant, string $place): void
     {
-    	foreach($this->votes as $vote) {
-    		if($vote->participant()->name() === $participant && $vote->potentialPlace()->name() === $place) {
-    			return;
-		    }
+	    $this->assertPotentialPlaceExists($place);
+	    $this->assertParticipantExists($participant);
+
+	    if($this->voteExists($participant, $place)) {
+	    	return;
 	    }
 
     	$this->votes[] = Vote::for(
@@ -93,5 +94,30 @@ final class Lunch implements Identifiable
 	public function getId(): Identifier
 	{
 		return $this->id;
+	}
+
+	private function voteExists(string $participant, string $place): bool
+	{
+		foreach($this->votes as $vote) {
+			if ($vote->participant()->name() === $participant && $vote->potentialPlace()->name() === $place) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private function assertPotentialPlaceExists(string $place): void
+	{
+		if (!isset($this->potentialPlaces[$place])) {
+			throw new PotentialPlaceDoesNotExist($place);
+		}
+	}
+
+	private function assertParticipantExists(string $participant): void
+	{
+		if (!isset($this->participants[$participant])) {
+			throw new ParticipantDoesNotExist($participant);
+		}
 	}
 }
