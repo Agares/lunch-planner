@@ -1,0 +1,13 @@
+<form action="{{ action }}" method="post" class="create_lunch">
+    <fieldset>
+        <legend>Create a lunch</legend>
+        <label for="create_lunch_lunch_name">Lunch name: </label>
+        <input type="text" name="lunch_name" id="create_lunch_lunch_name" value="{{values.lunch_name}}" />
+
+        {{#validationMessages.lunch_name}}
+            <p class="validation_message">{{.}}</p>
+        {{/validationMessages.lunch_name}}
+
+        <button>Go</button>
+    </fieldset>
+</form>

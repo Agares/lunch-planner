@@ -5,9 +5,13 @@ declare(strict_types=1);
 namespace Lunch\Http;
 
 use Lunch\Application\ReadLunchMatrix;
+use Lunch\Component\Form\FormDefinition;
+use Lunch\Component\Form\Renderer;
+use Lunch\Component\Form\SimpleForm;
 use Lunch\Infrastructure\CQRS\QueryBus;
 use Lunch\Infrastructure\Http\ResponseFactory;
 use Lunch\Infrastructure\Http\UrlGenerator;
+use Lunch\Infrastructure\InLayoutTemplateRenderer;
 use Lunch\Infrastructure\TemplateRenderer;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -21,7 +25,7 @@ final class ShowLunch
 	private $responseFactory;
 
 	/**
-	 * @var TemplateRenderer
+	 * @var InLayoutTemplateRenderer
 	 */
 	private $templateRenderer;
 
@@ -35,30 +39,38 @@ final class ShowLunch
 	 */
 	private $queryBus;
 
+	/**
+	 * @var Renderer
+	 */
+	private $formRenderer;
+
 	public function __construct(
 		// todo calm down with the number of parameters
 		ResponseFactory $responseFactory,
 		TemplateRenderer $templateRenderer,
 		UrlGenerator $urlGenerator,
-		QueryBus $queryBus
+		QueryBus $queryBus,
+		Renderer $formRenderer
 	)
 	{
 		$this->responseFactory = $responseFactory;
 		$this->templateRenderer = $templateRenderer;
 		$this->urlGenerator = $urlGenerator;
 		$this->queryBus = $queryBus;
+		$this->formRenderer = $formRenderer;
 	}
 
 	public function handle(string $id): ResponseInterface
 	{
+		// todo validate if a lunch with $id exists
 		$matrix = $this->queryBus->handle(new ReadLunchMatrix($id));
 
 		$template = $this->templateRenderer->render(
 			'show',
 			[
 				'matrix' => $matrix,
-				'addParticipantLink' => $this->urlGenerator->generate('lunch.participants.add', [$id]),
-				'addPotentialPlaceLink' => $this->urlGenerator->generate('lunch.potential_places.add', [$id]),
+				'addParticipantForm' => $this->formRenderer->render(new Form\AddParticipant($this->urlGenerator, $id)),
+				'addPotentialPlaceForm' => $this->formRenderer->render(new Form\AddPotentialPlace($this->urlGenerator, $id)),
 				'voteLink' => $this->urlGenerator->generate('lunch.vote', [$id])
 			]
 		);

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Lunch\Http;
 
+use Lunch\Component\Form\Renderer;
+use Lunch\Component\Form\SimpleForm;
 use Lunch\Infrastructure\CQRS\CommandBus;
 use Lunch\Infrastructure\Http\ResponseFactory;
 use Lunch\Infrastructure\Http\UrlGenerator;
@@ -27,19 +29,35 @@ final class AddPotentialPlace
 	 */
 	private $commandBus;
 
+	/**
+	 * @var Renderer
+	 */
+	private $formRenderer;
+
 	public function __construct(
 		ResponseFactory $responseFactory,
 		UrlGenerator $urlGenerator,
-		CommandBus $commandBus
+		CommandBus $commandBus,
+		Renderer $formRenderer
 	)
 	{
 		$this->responseFactory = $responseFactory;
 		$this->urlGenerator = $urlGenerator;
 		$this->commandBus = $commandBus;
+		$this->formRenderer = $formRenderer;
 	}
 
 	public function handle(ServerRequestInterface $request, string $id): ResponseInterface
 	{
+		// todo validate if $id is not empty?
+		$formDefinition = new Form\AddPotentialPlace($this->urlGenerator, $id);
+		$form = new SimpleForm($formDefinition);
+		$formState = $form->submit($request->getParsedBody());
+
+		if(!$formState->validationResult()->isValid()) {
+			return $this->responseFactory->html($this->formRenderer->render($formDefinition, $formState));
+		}
+
 		$this->commandBus->execute(new \Lunch\Application\AddPotentialPlace($id, $request->getParsedBody()['name']));
 
 		return $this->responseFactory->redirect($this->urlGenerator->generate('lunch.show', [$id]));

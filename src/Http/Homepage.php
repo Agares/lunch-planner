@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Lunch\Http;
 
+use Lunch\Component\Form\Renderer;
+use Lunch\Component\Form\SimpleForm;
 use Lunch\Infrastructure\Http\ResponseFactory;
-use Lunch\Infrastructure\TemplateRenderer;
 use Lunch\Infrastructure\Http\UrlGenerator;
+use Lunch\Infrastructure\InLayoutTemplateRenderer;
 use Psr\Http\Message\ResponseInterface;
 
 final class Homepage
@@ -17,30 +19,41 @@ final class Homepage
 	private $responseFactory;
 
 	/**
+	 * @var SimpleForm
+	 */
+	private $form;
+
+	/**
+	 * @var Renderer
+	 */
+	private $formRenderer;
+	/**
+	 * @var InLayoutTemplateRenderer
+	 */
+	private $templateRenderer;
+	/**
 	 * @var UrlGenerator
 	 */
 	private $urlGenerator;
-	/**
-	 * @var TemplateRenderer
-	 */
-	private $templateRenderer;
 
-	public function __construct(ResponseFactory $responseFactory, UrlGenerator $urlGenerator, TemplateRenderer $templateRenderer)
+	public function __construct(
+		ResponseFactory $responseFactory,
+		UrlGenerator $urlGenerator,
+		Renderer $formRenderer,
+		InLayoutTemplateRenderer $templateRenderer
+	)
 	{
 		$this->responseFactory = $responseFactory;
-		$this->urlGenerator = $urlGenerator;
+		$this->formRenderer = $formRenderer;
 		$this->templateRenderer = $templateRenderer;
+		$this->urlGenerator = $urlGenerator;
 	}
 
 	public function handle(): ResponseInterface
 	{
-		$response = $this->templateRenderer->render(
-			'home',
-			[
-				'createLunchUrl' => $this->urlGenerator->generate('lunch.create')
-			]
-		);
+		$formDefinition = new Form\CreateLunch($this->urlGenerator);
+		$form = $this->formRenderer->render($formDefinition);
 
-		return $this->responseFactory->html($response);
+		return $this->responseFactory->html($this->templateRenderer->render('home', ['form' => $form]));
 	}
 }

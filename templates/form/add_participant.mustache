@@ -1,0 +1,13 @@
+<form action="{{action}}" method="post">
+    <fieldset>
+        <legend>Add participant</legend>
+        <label for="add_participant_name">Name: </label>
+        <input type="text" name="name" id="add_participant_name" value="{{values.name}}">
+
+        {{#validationMessages.name}}
+            <p class="validation_message">{{.}}</p>
+        {{/validationMessages.name}}
+
+        <button>Add</button>
+    </fieldset>
+</form>
