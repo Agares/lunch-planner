@@ -3,9 +3,9 @@ services:
   front:
     environment:
       - VIRTUAL_HOST=lunch.agares.info
-  networks:
-    - front_proxy_default
-    - default
+    networks:
+      - front_proxy_default
+      - default
     restart: always
   
   db:
