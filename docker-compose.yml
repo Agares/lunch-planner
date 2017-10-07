@@ -8,8 +8,6 @@ services:
       - php
     ports:
       - '8969:80'
-    environment:
-      - VIRTUAL_HOST=lunch.agares.info
 
   php:
     build: docker/php
