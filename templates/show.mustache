@@ -1,35 +1,44 @@
-<h1>Lunch</h1>
-{{{addParticipantForm}}}
-{{{addPotentialPlaceForm}}}
+<div class="show_lunch__forms">
+    {{{addParticipantForm}}}
+    {{{addPotentialPlaceForm}}}
+</div>
 
-<table>
-    <thead>
-        <tr>
-            <th>Participant</th>
-            {{#matrix.potentialPlaces}}
-                <th>{{.}}</th>
-            {{/matrix.potentialPlaces}}
-        </tr>
-    </thead>
-    <tbody>
-        {{#matrix.participants}}
+<div class="show_lunch__matrix_container">
+    <table class="show_lunch__matrix">
+        <thead>
             <tr>
-                <td>{{name}}</td>
-                {{#votes}}
-                    <td>
-                        {{#value}}Yes{{/value}}
-                        {{^value}}
-                            <form action="{{{voteLink}}}" method="post">
-                                <input type="hidden" name="participant_name" value="{{name}}" />
-                                <input type="hidden" name="potential_place_name" value="{{potentialPlaceName}}" />
-
-                                <button>Vote</button>
-                            </form>
-                            No
-                        {{/value}}
-                    </td>
-                {{/votes}}
+                <th>Participant</th>
+                {{#matrix.potentialPlaces}}
+                    <th>{{.}}</th>
+                {{/matrix.potentialPlaces}}
             </tr>
-        {{/matrix.participants}}
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            {{#matrix.participants}}
+                <tr>
+                    <td>{{name}}</td>
+                    {{#votes}}
+                        <td class="{{#value}}show_lunch__voted{{/value}}">
+                            {{#value}}
+                                <form action="{{{voteNoLink}}}" method="post">
+                                    <input type="hidden" name="participant_name" value="{{name}}" />
+                                    <input type="hidden" name="potential_place_name" value="{{potentialPlaceName}}" />
+
+                                    <button aria-label="Vote" class="show_lunch__vote_no">-</button>
+                                </form>
+                            {{/value}}
+                            {{^value}}
+                                <form action="{{{voteLink}}}" method="post">
+                                    <input type="hidden" name="participant_name" value="{{name}}" />
+                                    <input type="hidden" name="potential_place_name" value="{{potentialPlaceName}}" />
+
+                                    <button aria-label="Vote" class="show_lunch__vote_yes">+</button>
+                                </form>
+                            {{/value}}
+                        </td>
+                    {{/votes}}
+                </tr>
+            {{/matrix.participants}}
+        </tbody>
+    </table>
+</div>

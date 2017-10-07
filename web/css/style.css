@@ -1,0 +1,139 @@
+/* todo some build process for CSS, remove dependencies on external CDNs */
+@import "https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css";
+@import url(https://fonts.googleapis.com/css?family=Lato:400,100,300,700,900,100italic,300italic,400italic,700italic,900italic&subset=latin,latin-ext);
+
+html, body {
+    background-color: #171719;
+    color: #EBEBFF;
+
+    font-size: 16px;
+    font-family: Lato, sans-serif;
+    font-weight: 400;
+
+    margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 300;
+    margin: 0;
+    padding: 0;
+    color: #ff1885;
+}
+
+h1 {
+    font-size: 2rem;
+}
+
+h2 {
+    font-size: 1.5rem;
+}
+
+h3 {
+    font-size: 1.12rem;
+}
+
+h4 {
+    font-size: 0.84rem;
+}
+
+h5 {
+    font-size: 0.63rem;
+}
+
+h6 {
+    font-size: 0.47rem;
+}
+
+fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+legend {
+    text-align: center;
+    width: 100%;
+    display: block;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+button {
+    width: 100%;
+    max-width: 5rem;
+    display: block;
+    margin: 1rem auto;
+    padding: 0.5rem;
+    border: 1px solid #222;
+    border-radius: 1rem;
+    background-color: #111;
+    color: #ff1885;
+}
+
+.site-header,
+.content {
+    padding: 0.5rem;
+}
+
+.site-header {
+    width: calc(100% - 1rem);
+    height: 2.25rem;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.content {
+    margin-top: 2rem;
+}
+
+.create_lunch {
+    width: 20rem;
+    margin: 0 auto;
+}
+
+.show_lunch__forms {
+    display: flex;
+    justify-content: space-around;
+}
+
+.show_lunch__matrix {
+    border-collapse: collapse;
+}
+
+.show_lunch__matrix_container {
+    overflow-y: auto;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.show_lunch__matrix,
+.show_lunch__matrix td,
+.show_lunch__matrix th {
+    border: 1px solid #222;
+}
+
+.show_lunch__matrix tbody tr:hover td {
+    background-color: #444;
+}
+
+.show_lunch__matrix td,
+.show_lunch__matrix th {
+    padding: 1rem;
+}
+
+.show_lunch__matrix button {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 1rem;
+    padding: 0;
+    margin: 0 auto;
+}
+
+.show_lunch__voted {
+    background-color: #333;
+}
