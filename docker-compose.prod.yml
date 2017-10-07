@@ -4,7 +4,7 @@ services:
     environment:
       - VIRTUAL_HOST=lunch.agares.info
     networks:
-      - front_proxy_default
+      - frontproxy_default
       - default
     restart: always
   
