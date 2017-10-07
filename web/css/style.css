@@ -13,6 +13,11 @@ html, body {
     margin: 0;
 }
 
+a {
+    color: #FFE931;
+    text-decoration: none;
+}
+
 h1,
 h2,
 h3,
@@ -75,6 +80,21 @@ button {
     color: #ff1885;
 }
 
+table {
+    border-collapse: collapse;
+}
+
+table,
+table td,
+table th {
+    border: 1px solid #222;
+}
+
+table td,
+table th {
+    padding: 1rem;
+}
+
 .site-header,
 .content {
     padding: 0.5rem;
@@ -95,13 +115,14 @@ button {
     margin: 0 auto;
 }
 
+.show_lunch__results {
+    display: block;
+    margin: 2rem 0;
+}
+
 .show_lunch__forms {
     display: flex;
     justify-content: space-around;
-}
-
-.show_lunch__matrix {
-    border-collapse: collapse;
 }
 
 .show_lunch__matrix_container {
@@ -111,19 +132,9 @@ button {
     padding: 0;
 }
 
-.show_lunch__matrix,
-.show_lunch__matrix td,
-.show_lunch__matrix th {
-    border: 1px solid #222;
-}
 
 .show_lunch__matrix tbody tr:hover td {
     background-color: #444;
-}
-
-.show_lunch__matrix td,
-.show_lunch__matrix th {
-    padding: 1rem;
 }
 
 .show_lunch__matrix button {
@@ -136,4 +147,40 @@ button {
 
 .show_lunch__voted {
     background-color: #333;
+}
+
+.lunch_results {
+    max-width: 30rem;
+    min-width: 20rem;
+    margin: 0 auto;
+}
+
+.lunch_results td,
+.lunch_results th {
+    width: 50%;
+}
+
+.lunch_results__percentage_column {
+    padding: 0;
+    margin: 0;
+    position: relative;
+    width: 50%;
+}
+
+.lunch_results__percentage_indicator {
+    display: block;
+
+    background-color: #ff1885;
+    z-index: 0;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+}
+
+.lunch_results__result {
+    position: relative;
+    z-index: 10;
+    text-align: center;
 }

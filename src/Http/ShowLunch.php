@@ -71,7 +71,8 @@ final class ShowLunch
 				'matrix' => $matrix,
 				'addParticipantForm' => $this->formRenderer->render(new Form\AddParticipant($this->urlGenerator, $id)),
 				'addPotentialPlaceForm' => $this->formRenderer->render(new Form\AddPotentialPlace($this->urlGenerator, $id)),
-				'voteLink' => $this->urlGenerator->generate('lunch.vote', [$id])
+				'voteLink' => $this->urlGenerator->generate('lunch.vote', [$id]),
+				'resultsLink' => $this->urlGenerator->generate('lunch.results', [$id])
 			]
 		);
 

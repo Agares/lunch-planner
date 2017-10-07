@@ -32,5 +32,10 @@ return [
 		'path' => '/lunches/{id}/votes',
 		'handler' => \Lunch\Http\Vote::class,
 		'method' => 'POST'
+	],
+	'lunch.results' => [
+		'path' => '/lunches/{id}/results',
+		'handler' => \Lunch\Http\ShowResults::class,
+		'method' => 'GET'
 	]
 ];

@@ -67,6 +67,13 @@ return [
 			\Lunch\Infrastructure\CQRS\CommandBus::class
 		]
 	],
+	\Lunch\Http\ShowResults::class => [
+		'parameters' => [
+			\Lunch\Infrastructure\InLayoutTemplateRenderer::class,
+			\Lunch\Infrastructure\Http\ResponseFactory::class,
+			\Lunch\Infrastructure\CQRS\QueryBus::class
+		]
+	],
 	\Lunch\Infrastructure\CQRS\CommandBus::class      => [
 		'methodCalls' => [
 			['registerHandler', [\Lunch\Application\CreateLunchHandler::class]],
@@ -119,10 +126,16 @@ return [
 	],
 	\Lunch\Infrastructure\CQRS\QueryBus::class               => [
 		'methodCalls' => [
-			['registerHandler', [\Lunch\Application\ReadLunchMatrixHandler::class]]
+			['registerHandler', [\Lunch\Application\ReadLunchMatrixHandler::class]],
+			['registerHandler', [\Lunch\Application\ReadResultsHandler::class]],
 		]
 	],
 	\Lunch\Application\ReadLunchMatrixHandler::class         => [
+		'parameters' => [
+			\PDO::class
+		]
+	],
+	\Lunch\Application\ReadResultsHandler::class         => [
 		'parameters' => [
 			\PDO::class
 		]
