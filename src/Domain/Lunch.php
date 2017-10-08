@@ -91,7 +91,14 @@ final class Lunch implements Identifiable
     	return $this->name;
     }
 
-	public function getId(): Identifier
+	public function removeVote(string $participant, string $place): void
+	{
+		$this->votes = array_filter($this->votes, function (Vote $vote) use ($participant, $place) {
+			return $vote->participant()->name() !== $participant && $vote->potentialPlace()->name() !== $place;
+		});
+	}
+
+	public function id(): Identifier
 	{
 		return $this->id;
 	}

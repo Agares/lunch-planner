@@ -40,7 +40,7 @@ final class PDORepository implements Repository
 			];
 		}, $lunch->votes());
 
-		$statement->bindValue(':id', (string)$lunch->getId());
+		$statement->bindValue(':id', (string)$lunch->id());
 		$statement->bindValue(':name', $lunch->name());
 		$statement->bindValue(':participants', json_encode($participants));
 		$statement->bindValue(':potentialPlaces', json_encode($potentialPlaces));

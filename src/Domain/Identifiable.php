@@ -6,5 +6,5 @@ namespace Lunch\Domain;
 
 interface Identifiable
 {
-	public function getId(): Identifier;
+	public function id(): Identifier;
 }

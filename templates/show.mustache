@@ -22,7 +22,7 @@
                     {{#votes}}
                         <td class="{{#value}}show_lunch__voted{{/value}}">
                             {{#value}}
-                                <form action="{{{voteNoLink}}}" method="post">
+                                <form action="{{{removeVoteLink}}}" method="post">
                                     <input type="hidden" name="participant_name" value="{{name}}" />
                                     <input type="hidden" name="potential_place_name" value="{{potentialPlaceName}}" />
 

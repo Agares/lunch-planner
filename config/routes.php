@@ -33,6 +33,11 @@ return [
 		'handler' => \Lunch\Http\Vote::class,
 		'method' => 'POST'
 	],
+	'lunch.remove_vote' => [
+		'path' => '/lunches/{id}/votes/remove',
+		'handler' => \Lunch\Http\RemoveVote::class,
+		'method' => 'POST' // todo investigate if it's possible to do a DELETE here (browser support, etc.)
+	],
 	'lunch.results' => [
 		'path' => '/lunches/{id}/results',
 		'handler' => \Lunch\Http\ShowResults::class,

@@ -102,4 +102,16 @@ class LunchSpec extends ObjectBehavior
 
 		$this->shouldThrow(ParticipantDoesNotExist::class)->during('vote', ['Josey', 'test']);
 	}
+
+	public function it_can_remove_a_vote()
+	{
+		$this->addPotentialPlace(PotentialPlace::withName('test'));
+		$this->addParticipant(Participant::withName('participant test'));
+
+		$this->vote('participant test', 'test');
+
+		$this->removeVote('participant test', 'test');
+
+		$this->votes()->shouldHaveCount(0);
+	}
 }
