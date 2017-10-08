@@ -114,4 +114,18 @@ class LunchSpec extends ObjectBehavior
 
 		$this->votes()->shouldHaveCount(0);
 	}
+
+	public function it_removes_vote_of_only_a_single_person()
+	{
+		$this->addPotentialPlace(PotentialPlace::withName('test'));
+		$this->addParticipant(Participant::withName('Josey'));
+		$this->addParticipant(Participant::withName('John'));
+
+		$this->vote('Josey', 'test');
+		$this->vote('John', 'test');
+
+		$this->removeVote('Josey', 'test');
+
+		$this->votes()->shouldHaveCount(1);
+	}
 }
