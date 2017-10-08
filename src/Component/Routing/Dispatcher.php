@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Lunch\Infrastructure\Routing;
+namespace Lunch\Component\Routing;
 
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;

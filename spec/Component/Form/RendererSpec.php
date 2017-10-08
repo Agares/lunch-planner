@@ -7,17 +7,28 @@ namespace spec\Lunch\Component\Form;
 use Lunch\Component\Form\FormDefinition;
 use Lunch\Component\Form\FormState;
 use Lunch\Component\Form\Renderer;
+use Lunch\Component\Http\EndpointReference;
+use Lunch\Component\Http\EndpointReferenceResolver;
 use Lunch\Component\Validator\ValidationResult;
 use Lunch\Component\Validator\Violation;
 use Lunch\Infrastructure\TemplateRenderer;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
+use spec\Lunch\Component\Http\MockEndpointReference;
 
 class RendererSpec extends ObjectBehavior
 {
-	public function let(FormDefinition $definition, FormState $state, TemplateRenderer $templateRenderer)
+	public function let(
+		FormDefinition $definition,
+		FormState $state,
+		TemplateRenderer $templateRenderer,
+		EndpointReference $endpointReference,
+		EndpointReferenceResolver $endpointReferenceResolver
+	)
 	{
-		$this->beConstructedWith($templateRenderer, $definition);
+		$endpointReferenceResolver->resolve(Argument::any())->willReturn('resolved_action');
+
+		$this->beConstructedWith($templateRenderer, $endpointReferenceResolver);
 
 		$definition
 			->name()
@@ -25,7 +36,7 @@ class RendererSpec extends ObjectBehavior
 
 		$definition
 			->action()
-			->willReturn('TEST');
+			->willReturn($endpointReference);
 
 		$state
 			->data()
@@ -88,10 +99,10 @@ class RendererSpec extends ObjectBehavior
     	$this->render($definition, $state);
     }
 
-    public function it_passes_form_action_to_the_view(FormDefinition $definition, FormState $state, TemplateRenderer $templateRenderer)
+    public function it_passes_resolved_form_action_to_the_template(FormDefinition $definition, FormState $state, TemplateRenderer $templateRenderer)
     {
 		$templateRenderer
-			->render(Argument::any(), Argument::withEntry('action', 'TEST'))
+			->render(Argument::any(), Argument::withEntry('action', 'resolved_action'))
 			->shouldBeCalled();
 
 		$this->render($definition, $state);

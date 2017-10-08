@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Lunch\Infrastructure\Http;
+namespace Lunch\Component\Http;
 
 final class RouteNotFound extends \RuntimeException
 {

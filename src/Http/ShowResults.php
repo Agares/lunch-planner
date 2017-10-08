@@ -6,7 +6,7 @@ namespace Lunch\Http;
 
 use Lunch\Application\ReadResults;
 use Lunch\Infrastructure\CQRS\QueryBus;
-use Lunch\Infrastructure\Http\ResponseFactory;
+use Lunch\Component\Http\ResponseFactory;
 use Lunch\Infrastructure\TemplateRenderer;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;

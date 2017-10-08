@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Lunch\Component\Form;
 
+use Lunch\Component\Http\EndpointReferenceResolver;
 use Lunch\Infrastructure\TemplateRenderer;
 
 final class Renderer
@@ -13,9 +14,15 @@ final class Renderer
 	 */
 	private $renderer;
 
-	public function __construct(TemplateRenderer $renderer)
+	/**
+	 * @var EndpointReferenceResolver
+	 */
+	private $endpointReferenceResolver;
+
+	public function __construct(TemplateRenderer $renderer, EndpointReferenceResolver $endpointReferenceResolver)
     {
 	    $this->renderer = $renderer;
+	    $this->endpointReferenceResolver = $endpointReferenceResolver;
     }
 
     public function render(FormDefinition $definition, FormState $state = null): string
@@ -29,7 +36,7 @@ final class Renderer
 	    return $this->renderer->render($templateName, [
 	    	'values' => $state->data(),
 	        'validationMessages' => $this->formatValidationMessages($state),
-		    'action' => $definition->action()
+		    'action' => $this->endpointReferenceResolver->resolve($definition->action())
 	    ]);
     }
 

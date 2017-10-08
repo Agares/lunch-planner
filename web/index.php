@@ -13,8 +13,8 @@ $request = \Zend\Diactoros\ServerRequestFactory::fromGlobals();
 $containerLoader = new \Lunch\Infrastructure\DI\ContainerLoader();
 $container = $containerLoader->load($services);
 
-$routerLoader = new \Lunch\Infrastructure\Routing\RouterLoader($container->get('routes'));
+$routerLoader = new \Lunch\Component\Routing\RouterLoader($container->get('routes'));
 $fastRouteDispatcher = $routerLoader->load();
 
-$dispatcher = new \Lunch\Infrastructure\Routing\Dispatcher($fastRouteDispatcher, $container);
+$dispatcher = new \Lunch\Component\Routing\Dispatcher($fastRouteDispatcher, $container);
 $dispatcher->dispatch($request);

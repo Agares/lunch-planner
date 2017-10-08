@@ -5,9 +5,7 @@ declare(strict_types=1);
 namespace Lunch\Http;
 
 use Lunch\Component\Form\Renderer;
-use Lunch\Component\Form\Form;
-use Lunch\Infrastructure\Http\ResponseFactory;
-use Lunch\Infrastructure\Http\UrlGenerator;
+use Lunch\Component\Http\ResponseFactory;
 use Lunch\Infrastructure\InLayoutTemplateRenderer;
 use Psr\Http\Message\ResponseInterface;
 
@@ -19,11 +17,6 @@ final class Homepage
 	private $responseFactory;
 
 	/**
-	 * @var Form
-	 */
-	private $form;
-
-	/**
 	 * @var Renderer
 	 */
 	private $formRenderer;
@@ -31,14 +24,9 @@ final class Homepage
 	 * @var InLayoutTemplateRenderer
 	 */
 	private $templateRenderer;
-	/**
-	 * @var UrlGenerator
-	 */
-	private $urlGenerator;
 
 	public function __construct(
 		ResponseFactory $responseFactory,
-		UrlGenerator $urlGenerator,
 		Renderer $formRenderer,
 		InLayoutTemplateRenderer $templateRenderer
 	)
@@ -46,12 +34,11 @@ final class Homepage
 		$this->responseFactory = $responseFactory;
 		$this->formRenderer = $formRenderer;
 		$this->templateRenderer = $templateRenderer;
-		$this->urlGenerator = $urlGenerator;
 	}
 
 	public function handle(): ResponseInterface
 	{
-		$formDefinition = new Form\CreateLunch($this->urlGenerator);
+		$formDefinition = new Form\CreateLunch();
 		$form = $this->formRenderer->render($formDefinition);
 
 		return $this->responseFactory->html($this->templateRenderer->render('home', ['form' => $form]));

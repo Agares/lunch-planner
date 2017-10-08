@@ -7,31 +7,23 @@ namespace Lunch\Http\Form;
 use Lunch\Component\Form\FormDefinition;
 use Lunch\Component\Form\Preprocessor;
 use Lunch\Component\Form\TrimPreprocessor;
+use Lunch\Component\Http\EndpointReference;
+use Lunch\Component\Routing\RouteReference;
 use Lunch\Component\Validator\SimpleViolation;
 use Lunch\Component\Validator\ValidationResult;
 use Lunch\Component\Validator\Validator;
-use Lunch\Infrastructure\Http\UrlGenerator;
+use Lunch\Component\Routing\UrlGenerator;
 
 final class CreateLunch implements FormDefinition
 {
-	/**
-	 * @var UrlGenerator
-	 */
-	private $urlGenerator;
-
-	public function __construct(UrlGenerator $urlGenerator)
-	{
-		$this->urlGenerator = $urlGenerator;
-	}
-
 	public function name(): string
 	{
 		return 'create_lunch';
 	}
 
-	public function action(): string
+	public function action(): EndpointReference
 	{
-		return $this->urlGenerator->generate('lunch.create');
+		return new RouteReference('lunch.create');
 	}
 
 	public function validator(): Validator

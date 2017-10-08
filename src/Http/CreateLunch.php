@@ -6,11 +6,11 @@ namespace Lunch\Http;
 
 use Lunch\Component\Form\Renderer;
 use Lunch\Component\Form\Form;
+use Lunch\Component\Routing\RouteReference;
 use Lunch\Infrastructure\CQRS\CommandBus;
-use Lunch\Infrastructure\Http\ResponseFactory;
-use Lunch\Infrastructure\Http\UrlGenerator;
+use Lunch\Component\Http\ResponseFactory;
+use Lunch\Component\Routing\UrlGenerator;
 use Lunch\Infrastructure\UUIDFactory;
-use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -43,14 +43,12 @@ final class CreateLunch
 	public function __construct(
 		// fixme calm down with the number of arguments...
 		ResponseFactory $responseFactory,
-		UrlGenerator $urlGenerator,
 		CommandBus $commandBus,
 		UUIDFactory $uuidFactory,
 		Renderer $formRenderer
 	)
 	{
 		$this->responseFactory = $responseFactory;
-		$this->urlGenerator = $urlGenerator;
 		$this->commandBus = $commandBus;
 		$this->uuidFactory = $uuidFactory;
 		$this->formRenderer = $formRenderer;
@@ -58,7 +56,7 @@ final class CreateLunch
 
 	public function handle(ServerRequestInterface $request): ResponseInterface
 	{
-		$formDefinition = new Form\CreateLunch($this->urlGenerator);
+		$formDefinition = new \Lunch\Http\Form\CreateLunch();
 		$form = new Form($formDefinition);
 
 		$formState = $form->submit($request->getParsedBody());
@@ -72,8 +70,6 @@ final class CreateLunch
 		$lunchId = (string)$this->uuidFactory->generateRandom();
 		$this->commandBus->execute(new \Lunch\Application\CreateLunch($lunchId, $formState->data()['lunch_name']));
 
-		$lunchUrl = $this->urlGenerator->generate('lunch.show', [$lunchId]);
-
-		return $this->responseFactory->redirect($lunchUrl);
+		return $this->responseFactory->redirect(new RouteReference('lunch.show', [$lunchId]));
 	}
 }

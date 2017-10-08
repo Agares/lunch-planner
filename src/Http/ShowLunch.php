@@ -9,8 +9,8 @@ use Lunch\Component\Form\FormDefinition;
 use Lunch\Component\Form\Renderer;
 use Lunch\Component\Form\Form;
 use Lunch\Infrastructure\CQRS\QueryBus;
-use Lunch\Infrastructure\Http\ResponseFactory;
-use Lunch\Infrastructure\Http\UrlGenerator;
+use Lunch\Component\Http\ResponseFactory;
+use Lunch\Component\Routing\UrlGenerator;
 use Lunch\Infrastructure\InLayoutTemplateRenderer;
 use Lunch\Infrastructure\TemplateRenderer;
 use Psr\Http\Message\RequestInterface;
@@ -69,8 +69,8 @@ final class ShowLunch
 			'show',
 			[
 				'matrix' => $matrix,
-				'addParticipantForm' => $this->formRenderer->render(new Form\AddParticipant($this->urlGenerator, $id)),
-				'addPotentialPlaceForm' => $this->formRenderer->render(new Form\AddPotentialPlace($this->urlGenerator, $id)),
+				'addParticipantForm' => $this->formRenderer->render(new \Lunch\Http\Form\AddParticipant($id)),
+				'addPotentialPlaceForm' => $this->formRenderer->render(new \Lunch\Http\Form\AddPotentialPlace($id)),
 				'voteLink' => $this->urlGenerator->generate('lunch.vote', [$id]),
 				'removeVoteLink' => $this->urlGenerator->generate('lunch.remove_vote', [$id]),
 				'resultsLink' => $this->urlGenerator->generate('lunch.results', [$id])

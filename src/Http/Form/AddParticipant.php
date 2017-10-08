@@ -7,26 +7,22 @@ namespace Lunch\Http\Form;
 use Lunch\Component\Form\FormDefinition;
 use Lunch\Component\Form\Preprocessor;
 use Lunch\Component\Form\TrimPreprocessor;
+use Lunch\Component\Http\EndpointReference;
+use Lunch\Component\Routing\RouteReference;
 use Lunch\Component\Validator\SimpleViolation;
 use Lunch\Component\Validator\ValidationResult;
 use Lunch\Component\Validator\Validator;
-use Lunch\Infrastructure\Http\UrlGenerator;
+use Lunch\Component\Routing\UrlGenerator;
 
 final class AddParticipant implements FormDefinition
 {
-	/**
-	 * @var UrlGenerator
-	 */
-	private $urlGenerator;
-
 	/**
 	 * @var string
 	 */
 	private $lunchId;
 
-	public function __construct(UrlGenerator $urlGenerator, string $lunchId)
+	public function __construct(string $lunchId)
 	{
-		$this->urlGenerator = $urlGenerator;
 		$this->lunchId = $lunchId;
 	}
 
@@ -35,9 +31,9 @@ final class AddParticipant implements FormDefinition
 		return 'add_participant';
 	}
 
-	public function action(): string
+	public function action(): EndpointReference
 	{
-		return $this->urlGenerator->generate('lunch.participants.add', [$this->lunchId]);
+		return new RouteReference('lunch.participants.add', [$this->lunchId]);
 	}
 
 	public function validator(): Validator

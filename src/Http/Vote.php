@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Lunch\Http;
 
+use Lunch\Component\Routing\RouteReference;
 use Lunch\Infrastructure\CQRS\CommandBus;
-use Lunch\Infrastructure\Http\ResponseFactory;
-use Lunch\Infrastructure\Http\UrlGenerator;
+use Lunch\Component\Http\ResponseFactory;
+use Lunch\Component\Routing\UrlGenerator;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -18,19 +19,13 @@ final class Vote
 	private $responseFactory;
 
 	/**
-	 * @var UrlGenerator
-	 */
-	private $urlGenerator;
-
-	/**
 	 * @var CommandBus
 	 */
 	private $commandBus;
 
-	public function __construct(ResponseFactory $responseFactory, UrlGenerator $urlGenerator, CommandBus $commandBus)
+	public function __construct(ResponseFactory $responseFactory, CommandBus $commandBus)
 	{
 		$this->responseFactory = $responseFactory;
-		$this->urlGenerator = $urlGenerator;
 		$this->commandBus = $commandBus;
 	}
 
@@ -42,6 +37,6 @@ final class Vote
 
 		$this->commandBus->execute(new \Lunch\Application\Vote($id, $participantName, $potentialPlaceName));
 
-		return $this->responseFactory->redirect($this->urlGenerator->generate('lunch.show', [$id]));
+		return $this->responseFactory->redirect(new RouteReference('lunch.show', [$id]));
 	}
 }
