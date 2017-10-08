@@ -32,7 +32,7 @@ return [
 			\Lunch\Infrastructure\Http\UrlGenerator::class,
 			\Lunch\Infrastructure\CQRS\CommandBus::class,
 			\Lunch\Infrastructure\UUIDFactory::class,
-			\Lunch\Component\Form\Renderer::class,
+			\Lunch\Component\Form\Renderer::class.'+Standalone',
 		],
 	],
 	\Lunch\Http\ShowLunch::class                          => [
@@ -49,7 +49,7 @@ return [
 			\Lunch\Infrastructure\Http\ResponseFactory::class,
 			\Lunch\Infrastructure\Http\UrlGenerator::class,
 			\Lunch\Infrastructure\CQRS\CommandBus::class,
-			\Lunch\Component\Form\Renderer::class,
+			\Lunch\Component\Form\Renderer::class.'+Standalone',
 		],
 	],
 	\Lunch\Http\AddPotentialPlace::class                  => [
@@ -57,7 +57,7 @@ return [
 			\Lunch\Infrastructure\Http\ResponseFactory::class,
 			\Lunch\Infrastructure\Http\UrlGenerator::class,
 			\Lunch\Infrastructure\CQRS\CommandBus::class,
-			\Lunch\Component\Form\Renderer::class,
+			\Lunch\Component\Form\Renderer::class.'+Standalone',
 		],
 	],
 	\Lunch\Http\Vote::class                               => [
@@ -167,6 +167,12 @@ return [
 	\Lunch\Component\Form\Renderer::class                 => [
 		'parameters' => [
 			\Lunch\Infrastructure\SimpleTemplateRenderer::class,
+		],
+	],
+	\Lunch\Component\Form\Renderer::class.'+Standalone'   => [
+		'className'  => \Lunch\Component\Form\Renderer::class,
+		'parameters' => [
+			\Lunch\Infrastructure\InLayoutTemplateRenderer::class,
 		],
 	],
 	\Lunch\Infrastructure\SimpleTemplateRenderer::class   => [
