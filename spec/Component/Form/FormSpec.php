@@ -7,14 +7,14 @@ namespace spec\Lunch\Component\Form;
 use Lunch\Component\Form\FormDefinition;
 use Lunch\Component\Form\FormNotSubmitted;
 use Lunch\Component\Form\Preprocessor;
-use Lunch\Component\Form\SimpleForm;
+use Lunch\Component\Form\Form;
 use Lunch\Component\Validator\ValidationResult;
 use Lunch\Component\Validator\Validator;
 use Lunch\Component\Validator\Violation;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-final class SimpleFormSpec extends ObjectBehavior
+final class FormSpec extends ObjectBehavior
 {
 	public function let(FormDefinition $definition, Validator $validator, Violation $violation, Preprocessor $preprocessor)
 	{
@@ -33,7 +33,7 @@ final class SimpleFormSpec extends ObjectBehavior
 
     public function it_is_initializable()
     {
-        $this->shouldHaveType(SimpleForm::class);
+        $this->shouldHaveType(Form::class);
     }
 
     public function it_correctly_passes_negative_validation_result(Validator $validator, Violation $violation)

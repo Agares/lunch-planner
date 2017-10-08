@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Lunch\Http;
 
 use Lunch\Component\Form\Renderer;
-use Lunch\Component\Form\SimpleForm;
+use Lunch\Component\Form\Form;
 use Lunch\Infrastructure\CQRS\CommandBus;
 use Lunch\Infrastructure\Http\ResponseFactory;
 use Lunch\Infrastructure\Http\UrlGenerator;
@@ -50,7 +50,7 @@ final class AddParticipant
 	{
 		// todo validate if $id is empty
 		$formDefinition = new Form\AddParticipant($this->urlGenerator, $id);
-		$form = new SimpleForm($formDefinition);
+		$form = new Form($formDefinition);
 		$formState = $form->submit($request->getParsedBody());
 
 		if(!$formState->validationResult()->isValid()) {

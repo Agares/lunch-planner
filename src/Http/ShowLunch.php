@@ -7,7 +7,7 @@ namespace Lunch\Http;
 use Lunch\Application\ReadLunchMatrix;
 use Lunch\Component\Form\FormDefinition;
 use Lunch\Component\Form\Renderer;
-use Lunch\Component\Form\SimpleForm;
+use Lunch\Component\Form\Form;
 use Lunch\Infrastructure\CQRS\QueryBus;
 use Lunch\Infrastructure\Http\ResponseFactory;
 use Lunch\Infrastructure\Http\UrlGenerator;

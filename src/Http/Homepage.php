@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Lunch\Http;
 
 use Lunch\Component\Form\Renderer;
-use Lunch\Component\Form\SimpleForm;
+use Lunch\Component\Form\Form;
 use Lunch\Infrastructure\Http\ResponseFactory;
 use Lunch\Infrastructure\Http\UrlGenerator;
 use Lunch\Infrastructure\InLayoutTemplateRenderer;
@@ -19,7 +19,7 @@ final class Homepage
 	private $responseFactory;
 
 	/**
-	 * @var SimpleForm
+	 * @var Form
 	 */
 	private $form;
 
