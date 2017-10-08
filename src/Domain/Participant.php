@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Lunch\Domain;
 
-class Participant
+final class Participant
 {
 	/**
 	 * @var string

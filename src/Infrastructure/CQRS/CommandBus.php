@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Lunch\Infrastructure\CQRS;
 
-class CommandBus
+final class CommandBus
 {
 	/**
 	 * @var CommandHandler[]

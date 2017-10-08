@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Lunch\Application;
 
 use Lunch\Infrastructure\CQRS\CommandHandler;
 
-class VoteHandler implements CommandHandler
+final class VoteHandler implements CommandHandler
 {
 	/**
 	 * @var Repository

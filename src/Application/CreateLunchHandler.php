@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Lunch\Application;
 
 use Lunch\Domain\Lunch;
 use Lunch\Infrastructure\CQRS\CommandHandler;
 use Lunch\Infrastructure\UUID;
 
-class CreateLunchHandler implements CommandHandler
+final class CreateLunchHandler implements CommandHandler
 {
 	/**
 	 * @var Repository

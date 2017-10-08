@@ -39,9 +39,9 @@ abstract class Handler
 		return $this->container()->get(InLayoutTemplateRenderer::class);
 	}
 
-	protected function endpointReferenceResolver(): EndpointReferenceResolver
+	protected function endpointReferenceResolver(): DefaultEndpointReferenceResolver
 	{
-		return $this->container()->get(EndpointReferenceResolver::class);
+		return $this->container()->get(DefaultEndpointReferenceResolver::class);
 	}
 
 	protected function container(): ContainerInterface

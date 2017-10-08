@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Lunch\Domain;
 
-class Vote
+final class Vote
 {
 	/**
 	 * @var PotentialPlace

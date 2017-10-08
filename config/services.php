@@ -3,36 +3,36 @@
 declare(strict_types=1);
 
 return [
-	'routes'                                               => [
+	'routes'                                                      => [
 		'literal' => require __DIR__.'/routes.php',
 	],
-	\Lunch\Infrastructure\InLayoutTemplateRenderer::class  => [
+	\Lunch\Infrastructure\InLayoutTemplateRenderer::class         => [
 		'parameters' => [
 			\Lunch\Infrastructure\SimpleTemplateRenderer::class,
 		],
 	],
-	\Mustache_Engine::class                                => [],
-	\Lunch\Component\Http\ResponseFactory::class           => [
+	\Mustache_Engine::class                                       => [],
+	\Lunch\Component\Http\ResponseFactory::class                  => [
 		'parameters' => [
-			\Lunch\Component\Http\EndpointReferenceResolver::class
+			\Lunch\Component\Http\DefaultEndpointReferenceResolver::class
 		]
 	],
-	\Lunch\Component\Routing\UrlGenerator::class           => [
+	\Lunch\Component\Routing\UrlGenerator::class                  => [
 		'parameters' => [
 			'routes',
 		],
 	],
-	\Lunch\Http\Homepage::class                            => [
+	\Lunch\Http\Homepage::class                                   => [
 		'parameters' => [
 			\Psr\Container\ContainerInterface::class
 		],
 	],
-	\Lunch\Http\CreateLunch::class                         => [
+	\Lunch\Http\CreateLunch::class                                => [
 		'parameters' => [
 			\Psr\Container\ContainerInterface::class
 		],
 	],
-	\Lunch\Http\ShowLunch::class                           => [
+	\Lunch\Http\ShowLunch::class                                  => [
 		'parameters' => [
 			\Psr\Container\ContainerInterface::class
 		],
@@ -118,45 +118,45 @@ return [
 			return $pdo;
 		},
 	],
-	\Lunch\Infrastructure\CQRS\QueryBus::class             => [
+	\Lunch\Infrastructure\CQRS\QueryBus::class                    => [
 		'methodCalls' => [
 			['registerHandler', [\Lunch\Application\ReadLunchMatrixHandler::class]],
 			['registerHandler', [\Lunch\Application\ReadResultsHandler::class]],
 		],
 	],
-	\Lunch\Application\ReadLunchMatrixHandler::class       => [
+	\Lunch\Application\ReadLunchMatrixHandler::class              => [
 		'parameters' => [
 			\PDO::class,
 		],
 	],
-	\Lunch\Application\ReadResultsHandler::class           => [
+	\Lunch\Application\ReadResultsHandler::class                  => [
 		'parameters' => [
 			\PDO::class,
 		],
 	],
-	\Lunch\Component\Form\Renderer::class                  => [
+	\Lunch\Component\Form\Renderer::class                         => [
 		'parameters' => [
 			\Lunch\Infrastructure\SimpleTemplateRenderer::class,
-			\Lunch\Component\Http\EndpointReferenceResolver::class
+			\Lunch\Component\Http\DefaultEndpointReferenceResolver::class
 		],
 	],
-	\Lunch\Component\Form\Renderer::class.'+Standalone'    => [
+	\Lunch\Component\Form\Renderer::class.'+Standalone'           => [
 		'className'  => \Lunch\Component\Form\Renderer::class,
 		'parameters' => [
 			\Lunch\Infrastructure\InLayoutTemplateRenderer::class,
 		],
 	],
-	\Lunch\Infrastructure\SimpleTemplateRenderer::class    => [
+	\Lunch\Infrastructure\SimpleTemplateRenderer::class           => [
 		'parameters' => [
 			\Mustache_Engine::class,
 		],
 	],
-	\Lunch\Component\Http\EndpointReferenceResolver::class => [
+	\Lunch\Component\Http\DefaultEndpointReferenceResolver::class => [
 		'methodCalls' => [
 			['registerResolver', [\Lunch\Component\Routing\RouteReferenceResolver::class]],
 		],
 	],
-	\Lunch\Component\Routing\RouteReferenceResolver::class => [
+	\Lunch\Component\Routing\RouteReferenceResolver::class        => [
 		'parameters' => [
 			\Lunch\Component\Routing\UrlGenerator::class,
 		],

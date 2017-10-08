@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Lunch\Domain;
 
 final class PotentialPlace

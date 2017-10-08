@@ -11,11 +11,11 @@ use Zend\Diactoros\Response\RedirectResponse;
 final class ResponseFactory
 {
 	/**
-	 * @var EndpointReferenceResolver
+	 * @var DefaultEndpointReferenceResolver
 	 */
 	private $endpointReferenceResolver;
 
-	public function __construct(EndpointReferenceResolver $endpointReferenceResolver)
+	public function __construct(DefaultEndpointReferenceResolver $endpointReferenceResolver)
 	{
 		$this->endpointReferenceResolver = $endpointReferenceResolver;
 	}

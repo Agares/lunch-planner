@@ -8,6 +8,7 @@ use Lunch\Component\Form\FormDefinition;
 use Lunch\Component\Form\FormState;
 use Lunch\Component\Form\Renderer;
 use Lunch\Component\Http\EndpointReference;
+use Lunch\Component\Http\DefaultEndpointReferenceResolver;
 use Lunch\Component\Http\EndpointReferenceResolver;
 use Lunch\Component\Validator\ValidationResult;
 use Lunch\Component\Validator\Violation;
