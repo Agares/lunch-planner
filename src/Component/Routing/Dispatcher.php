@@ -29,7 +29,7 @@ final class Dispatcher
 
 	public function dispatch(ServerRequestInterface $request): void
 	{
-		[$status, $handlerClass, $arguments] = $this->fastRouteDispatcher->dispatch($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);
+		[$status, $handlerClass, $arguments] = $this->fastRouteDispatcher->dispatch($request->getMethod(), $request->getUri()->getPath());
 
 		switch ($status) {
 			case \FastRoute\Dispatcher::NOT_FOUND:
