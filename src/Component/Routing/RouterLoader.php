@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Lunch\Component\Routing;
 
 use FastRoute\Dispatcher;
-use FastRoute\Route;
 use FastRoute\RouteCollector;
 
 final class RouterLoader

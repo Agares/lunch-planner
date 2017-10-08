@@ -19,7 +19,8 @@ final class ReadResultsHandler implements QueryHandler
 	}
 
 	// todo refactor, maybe move some logic to the DB?
-	public function handle($query)
+	// todo return an object instead of array
+	public function handle($query): array
 	{
 		assert($query instanceof ReadResults);
 

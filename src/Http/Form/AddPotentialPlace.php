@@ -12,7 +12,6 @@ use Lunch\Component\Routing\RouteReference;
 use Lunch\Component\Validator\SimpleViolation;
 use Lunch\Component\Validator\ValidationResult;
 use Lunch\Component\Validator\Validator;
-use Lunch\Component\Routing\UrlGenerator;
 
 final class AddPotentialPlace implements FormDefinition
 {

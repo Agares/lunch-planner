@@ -24,59 +24,42 @@ return [
 	],
 	\Lunch\Http\Homepage::class                            => [
 		'parameters' => [
-			\Lunch\Component\Http\ResponseFactory::class,
-			\Lunch\Component\Form\Renderer::class,
-			\Lunch\Infrastructure\InLayoutTemplateRenderer::class,
+			\Psr\Container\ContainerInterface::class
 		],
 	],
 	\Lunch\Http\CreateLunch::class                         => [
 		'parameters' => [
-			\Lunch\Component\Http\ResponseFactory::class,
-			\Lunch\Infrastructure\CQRS\CommandBus::class,
-			\Lunch\Infrastructure\UUIDFactory::class,
-			\Lunch\Component\Form\Renderer::class.'+Standalone',
+			\Psr\Container\ContainerInterface::class
 		],
 	],
 	\Lunch\Http\ShowLunch::class                           => [
 		'parameters' => [
-			\Lunch\Component\Http\ResponseFactory::class,
-			\Lunch\Infrastructure\InLayoutTemplateRenderer::class,
-			\Lunch\Component\Routing\UrlGenerator::class,
-			\Lunch\Infrastructure\CQRS\QueryBus::class,
-			\Lunch\Component\Form\Renderer::class,
+			\Psr\Container\ContainerInterface::class
 		],
 	],
 	\Lunch\Http\AddParticipant::class                      => [
 		'parameters' => [
-			\Lunch\Component\Http\ResponseFactory::class,
-			\Lunch\Infrastructure\CQRS\CommandBus::class,
-			\Lunch\Component\Form\Renderer::class.'+Standalone',
+			\Psr\Container\ContainerInterface::class
 		],
 	],
 	\Lunch\Http\AddPotentialPlace::class                   => [
 		'parameters' => [
-			\Lunch\Component\Http\ResponseFactory::class,
-			\Lunch\Infrastructure\CQRS\CommandBus::class,
-			\Lunch\Component\Form\Renderer::class.'+Standalone',
+			\Psr\Container\ContainerInterface::class
 		],
 	],
 	\Lunch\Http\Vote::class                                => [
 		'parameters' => [
-			\Lunch\Component\Http\ResponseFactory::class,
-			\Lunch\Infrastructure\CQRS\CommandBus::class,
+			\Psr\Container\ContainerInterface::class
 		],
 	],
 	\Lunch\Http\RemoveVote::class                          => [
 		'parameters' => [
-			\Lunch\Component\Http\ResponseFactory::class,
-			\Lunch\Infrastructure\CQRS\CommandBus::class,
+			\Psr\Container\ContainerInterface::class
 		],
 	],
 	\Lunch\Http\ShowResults::class                         => [
 		'parameters' => [
-			\Lunch\Infrastructure\InLayoutTemplateRenderer::class,
-			\Lunch\Component\Http\ResponseFactory::class,
-			\Lunch\Infrastructure\CQRS\QueryBus::class,
+			\Psr\Container\ContainerInterface::class
 		],
 	],
 	\Lunch\Infrastructure\CQRS\CommandBus::class           => [
