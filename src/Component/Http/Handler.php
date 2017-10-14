@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Lunch\Component\Http;
 
-use Lunch\Component\Form\Renderer;
+use Lunch\Component\Form\ViewFactory;
+use Lunch\Component\View\Renderer;
 use Lunch\Infrastructure\InLayoutTemplateRenderer;
 use Lunch\Infrastructure\TemplateRenderer;
 use Psr\Container\ContainerInterface;
@@ -29,14 +30,15 @@ abstract class Handler
 		return $this->container->get(ResponseFactory::class);
 	}
 
-	protected function formRenderer(): Renderer
+	// todo get rid of this, form views should probably be created in Form class
+	protected function formViewFactory(): ViewFactory
 	{
-		return $this->container->get(Renderer::class);
+		return $this->container->get(ViewFactory::class);
 	}
 
-	protected function templateRenderer(): TemplateRenderer
+	protected function viewRenderer() : Renderer
 	{
-		return $this->container()->get(InLayoutTemplateRenderer::class);
+		return $this->container()->get(Renderer::class);
 	}
 
 	protected function endpointReferenceResolver(): DefaultEndpointReferenceResolver

@@ -6,11 +6,6 @@ return [
 	'routes'                                                      => [
 		'literal' => require __DIR__.'/routes.php',
 	],
-	\Lunch\Infrastructure\InLayoutTemplateRenderer::class         => [
-		'parameters' => [
-			\Lunch\Infrastructure\SimpleTemplateRenderer::class,
-		],
-	],
 	\Mustache_Engine::class                                       => [],
 	\Lunch\Component\Http\ResponseFactory::class                  => [
 		'parameters' => [
@@ -105,7 +100,7 @@ return [
 		],
 	],
 	\Lunch\Infrastructure\UUIDFactory::class               => [],
-	\PDO::class                                            => [
+	\PDO::class                                                   => [
 		'create' => function () {
 			$pdo = new \PDO(
 				sprintf('pgsql:host=db;dbname=%s', getenv('POSTGRES_DB')),
@@ -134,21 +129,9 @@ return [
 			\PDO::class,
 		],
 	],
-	\Lunch\Component\Form\Renderer::class                         => [
+	\Lunch\Component\Form\ViewFactory::class                      => [
 		'parameters' => [
-			\Lunch\Infrastructure\SimpleTemplateRenderer::class,
 			\Lunch\Component\Http\DefaultEndpointReferenceResolver::class
-		],
-	],
-	\Lunch\Component\Form\Renderer::class.'+Standalone'           => [
-		'className'  => \Lunch\Component\Form\Renderer::class,
-		'parameters' => [
-			\Lunch\Infrastructure\InLayoutTemplateRenderer::class,
-		],
-	],
-	\Lunch\Infrastructure\SimpleTemplateRenderer::class           => [
-		'parameters' => [
-			\Mustache_Engine::class,
 		],
 	],
 	\Lunch\Component\Http\DefaultEndpointReferenceResolver::class => [
@@ -161,4 +144,24 @@ return [
 			\Lunch\Component\Routing\UrlGenerator::class,
 		],
 	],
+	\Lunch\Component\View\Renderer::class => [
+		'parameters' => [
+			\Lunch\Component\View\TemplateReferenceResolver::class,
+			\Mustache_Engine::class,
+			\Lunch\Component\View\ReferenceResolver::class
+		]
+	],
+	\Lunch\Component\View\ReferenceResolver::class => [
+		'methodCalls' => [
+			['registerResolver', [\Lunch\Component\Http\DefaultEndpointReferenceResolver::class, 'literal:'.\Lunch\Component\Http\EndpointReference::class ]]
+		]
+	],
+	\Lunch\Component\View\TemplateReferenceResolver::class => [
+		'methodCalls' => [
+			['registerHandler', [\Lunch\Component\View\FilesystemTemplateReferenceResolver::class]]
+		]
+	],
+	\Lunch\Component\View\FilesystemTemplateReferenceResolver::class => [
+
+	]
 ];

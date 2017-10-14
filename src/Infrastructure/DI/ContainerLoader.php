@@ -33,7 +33,17 @@ final class ContainerLoader
 
 			if(isset($serviceConfiguration['methodCalls'])) {
 				foreach($serviceConfiguration['methodCalls'] as $methodCall) {
-					$definition->method($methodCall[0], ...array_map('\DI\get', $methodCall[1] ?? []));
+					$methodParameters = [];
+
+					foreach($methodCall[1] as $argument) {
+						if(strpos($argument, 'literal:') === 0) {
+							$methodParameters[] = substr($argument, strlen('literal:'));
+						} else {
+							$methodParameters[] = \DI\get($argument);
+						}
+					}
+
+					$definition->method($methodCall[0], ...$methodParameters);
 				}
 			}
 

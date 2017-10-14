@@ -5,39 +5,33 @@ declare(strict_types = 1);
 namespace Lunch\Component\Form;
 
 use Lunch\Component\Http\EndpointReferenceResolver;
+use Lunch\Component\View\FilesystemTemplateReference;
+use Lunch\Component\View\View;
 use Lunch\Infrastructure\TemplateRenderer;
 
-final class Renderer
+final class ViewFactory
 {
-	/**
-	 * @var TemplateRenderer
-	 */
-	private $renderer;
-
 	/**
 	 * @var EndpointReferenceResolver
 	 */
 	private $endpointReferenceResolver;
 
-	public function __construct(TemplateRenderer $renderer, EndpointReferenceResolver $endpointReferenceResolver)
+	public function __construct(EndpointReferenceResolver $endpointReferenceResolver)
     {
-	    $this->renderer = $renderer;
 	    $this->endpointReferenceResolver = $endpointReferenceResolver;
     }
 
-    public function render(FormDefinition $definition, FormState $state = null): string
+    public function createView(FormDefinition $definition, FormState $state = null): View
     {
     	if($state === null) {
     		$state = new EmptyFormState();
 	    }
 
-	    $templateName = sprintf('form/%s', $definition->name());
-
-	    return $this->renderer->render($templateName, [
+	    return new FormView([
 	    	'values' => $state->data(),
-	        'validationMessages' => $this->formatValidationMessages($state),
+		    'validationMessages' => $this->formatValidationMessages($state),
 		    'action' => $this->endpointReferenceResolver->resolve($definition->action())
-	    ]);
+	    ], new FilesystemTemplateReference(sprintf('form/%s', $definition->name())));
     }
 
 	private function formatValidationMessages(FormState $form): array

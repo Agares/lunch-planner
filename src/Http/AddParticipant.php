@@ -6,6 +6,7 @@ namespace Lunch\Http;
 
 use Lunch\Component\Form\Form;
 use Lunch\Component\Routing\RouteReference;
+use Lunch\Http\View\Layout;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -19,10 +20,11 @@ final class AddParticipant extends CQRSHandler
 		$formState = $form->submit($request->getParsedBody());
 
 		if(!$formState->validationResult()->isValid()) {
-			$renderedForm = $this->formRenderer()->render($formDefinition, $formState);
-			$formInLayout = $this->templateRenderer()->render('single_form', ['form' => $renderedForm]);
+			$renderedForm = $this->formViewFactory()->createView($formDefinition, $formState);
 
-			return $this->response()->html($formInLayout);
+			$layout = new Layout($renderedForm);
+
+			return $this->response()->html($this->viewRenderer()->render($layout));
 		}
 		$this->commandBus()->execute(new \Lunch\Application\AddParticipant($id, $request->getParsedBody()['name']));
 

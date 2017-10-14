@@ -6,6 +6,7 @@ namespace Lunch\Http;
 
 use Lunch\Component\Form\Form;
 use Lunch\Component\Routing\RouteReference;
+use Lunch\Http\View\Layout;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -19,12 +20,11 @@ final class CreateLunch extends CQRSHandler
 		$formState = $form->submit($request->getParsedBody());
 
 		if(!$formState->validationResult()->isValid()) {
-			$renderedForm = $this->formRenderer()->render($formDefinition, $formState);
-			$inLayoutForm = $this->templateRenderer()->render('single_form', [
-				'form' => $renderedForm
-			]);
+			$renderedForm = $this->formViewFactory()->createView($formDefinition, $formState);
 
-			return $this->response()->html($inLayoutForm);
+			$layout = new Layout($renderedForm);
+
+			return $this->response()->html($this->viewRenderer()->render($layout));
 		}
 
 		$lunchId = (string)$this->uuidFactory()->generateRandom();
