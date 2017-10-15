@@ -20,11 +20,6 @@ final class Form
 	private $validationResult;
 
 	/**
-	 * @var bool
-	 */
-	private $isSubmitted = false;
-
-	/**
 	 * @var Preprocessor
 	 */
 	private $preprocessor;
@@ -43,7 +38,6 @@ final class Form
     public function submit(array $data): FormState
     {
     	$this->data = $this->preprocessor->process($data);
-    	$this->isSubmitted = true;
 
     	$this->validate();
 

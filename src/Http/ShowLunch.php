@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Lunch\Http;
 
 use Lunch\Application\ReadLunchMatrix;
+use Lunch\Component\Form\FormView;
 use Lunch\Http\View\Layout;
 use Psr\Http\Message\ResponseInterface;
 
@@ -16,8 +17,8 @@ final class ShowLunch extends CQRSHandler
 		$matrix = $this->queryBus()->handle(new ReadLunchMatrix($id));
 
 		$view = new View\ShowLunch(
-			$this->formViewFactory()->createView(new \Lunch\Http\Form\AddParticipant($id)),
-			$this->formViewFactory()->createView(new \Lunch\Http\Form\AddPotentialPlace($id)),
+			new FormView(new Form\AddParticipant($id)),
+			new FormView(new Form\AddPotentialPlace($id)),
 			$matrix,
 			$id
 		);

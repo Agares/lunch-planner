@@ -129,11 +129,6 @@ return [
 			\PDO::class,
 		],
 	],
-	\Lunch\Component\Form\ViewFactory::class                      => [
-		'parameters' => [
-			\Lunch\Component\Http\DefaultEndpointReferenceResolver::class
-		],
-	],
 	\Lunch\Component\Http\DefaultEndpointReferenceResolver::class => [
 		'methodCalls' => [
 			['registerResolver', [\Lunch\Component\Routing\RouteReferenceResolver::class]],
@@ -161,7 +156,5 @@ return [
 			['registerHandler', [\Lunch\Component\View\FilesystemTemplateReferenceResolver::class]]
 		]
 	],
-	\Lunch\Component\View\FilesystemTemplateReferenceResolver::class => [
-
-	]
+	\Lunch\Component\View\FilesystemTemplateReferenceResolver::class => []
 ];

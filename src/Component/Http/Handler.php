@@ -30,12 +30,6 @@ abstract class Handler
 		return $this->container->get(ResponseFactory::class);
 	}
 
-	// todo get rid of this, form views should probably be created in Form class
-	protected function formViewFactory(): ViewFactory
-	{
-		return $this->container->get(ViewFactory::class);
-	}
-
 	protected function viewRenderer() : Renderer
 	{
 		return $this->container()->get(Renderer::class);

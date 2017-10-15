@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Lunch\Http;
 
 use Lunch\Component\Form\Form;
+use Lunch\Component\Form\FormView;
 use Lunch\Component\Routing\RouteReference;
 use Lunch\Http\View\Layout;
 use Psr\Http\Message\ResponseInterface;
@@ -21,7 +22,7 @@ final class AddPotentialPlace extends CQRSHandler
 
 
 		if(!$formState->validationResult()->isValid()) {
-			$renderedForm = $this->formViewFactory()->createView($formDefinition, $formState);
+			$renderedForm = new FormView($formDefinition, $formState);
 			$layout = new Layout($renderedForm);
 
 			return $this->response()->html($this->viewRenderer()->render($layout));

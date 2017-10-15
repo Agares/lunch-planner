@@ -6,6 +6,7 @@ namespace spec\Lunch\Component\Form;
 
 use Lunch\Component\Form\FormDefinition;
 use Lunch\Component\Form\FormState;
+use Lunch\Component\Form\FormView;
 use Lunch\Component\Form\ViewFactory;
 use Lunch\Component\Http\EndpointReference;
 use Lunch\Component\Http\DefaultEndpointReferenceResolver;
@@ -17,19 +18,14 @@ use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use spec\Lunch\Component\Http\MockEndpointReference;
 
-class ViewFactorySpec extends ObjectBehavior
+class FormViewSpec extends ObjectBehavior
 {
 	public function let(
 		FormDefinition $definition,
 		FormState $state,
-		EndpointReference $endpointReference,
-		EndpointReferenceResolver $endpointReferenceResolver
+		EndpointReference $endpointReference
 	)
 	{
-		$endpointReferenceResolver->resolve(Argument::any())->willReturn('resolved_action');
-
-		$this->beConstructedWith($endpointReferenceResolver);
-
 		$definition
 			->name()
 			->willReturn('mock_form');
@@ -45,14 +41,16 @@ class ViewFactorySpec extends ObjectBehavior
 		$state
 			->validationResult()
 			->willReturn(new ValidationResult([]));
+
+		$this->beConstructedWith($definition, $state);
 	}
 
     public function it_is_initializable()
     {
-        $this->shouldHaveType(ViewFactory::class);
+        $this->shouldHaveType(FormView::class);
     }
 
-    public function it_passes_values_to_the_view(FormDefinition $definition, FormState $state)
+    public function it_passes_values_to_the_view(FormState $state)
     {
     	$state
 		    ->data()
@@ -60,7 +58,7 @@ class ViewFactorySpec extends ObjectBehavior
     		'value_01' => 'a'
 	    ]);
 
-    	$this->createView($definition, $state)->getViewData()->shouldHaveKeyWithValue('values', ['value_01' => 'a']);
+    	$this->getViewData()->shouldHaveKeyWithValue('values', ['value_01' => 'a']);
     }
 
     public function it_passes_validation_violations_to_the_view(FormDefinition $definition, FormState $state, Violation $violation)
@@ -79,13 +77,23 @@ class ViewFactorySpec extends ObjectBehavior
 		    ->willReturn(new ValidationResult([$violation->getWrappedObject()]));
 
     	$this
-		    ->createView($definition, $state)
 		    ->getViewData()
 		    ->shouldHaveKeyWithValue('validationMessages', ['value_01' => 'Oh noes']);
     }
 
-    public function it_passes_resolved_form_action_to_the_template(FormDefinition $definition, FormState $state)
+    public function it_passes_form_action_to_the_template(EndpointReference $endpointReference)
     {
-		$this->createView($definition, $state)->getViewData()->shouldHaveKeyWithValue('action', 'resolved_action');
+		$this->getViewData()->shouldHaveKeyWithValue('action', $endpointReference);
+    }
+
+    public function it_correctly_handles_empty_state(FormDefinition $definition, EndpointReference $endpointReference)
+    {
+    	$this->beConstructedWith($definition, null);
+
+    	$this->getViewData()->shouldBeEqualTo([
+		    'values' => [],
+		    'validationMessages' => [],
+		    'action' => $endpointReference
+	    ]);
     }
 }

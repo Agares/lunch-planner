@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Lunch\Http;
 
 use Lunch\Component\Form\Form;
+use Lunch\Component\Form\FormView;
 use Lunch\Component\Routing\RouteReference;
 use Lunch\Http\View\Layout;
 use Psr\Http\Message\ResponseInterface;
@@ -20,7 +21,7 @@ final class CreateLunch extends CQRSHandler
 		$formState = $form->submit($request->getParsedBody());
 
 		if(!$formState->validationResult()->isValid()) {
-			$renderedForm = $this->formViewFactory()->createView($formDefinition, $formState);
+			$renderedForm = new FormView($formDefinition, $formState);
 
 			$layout = new Layout($renderedForm);
 
