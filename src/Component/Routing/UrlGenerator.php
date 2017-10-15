@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Lunch\Component\Routing;
 
 use FastRoute\RouteParser\Std;
-use Lunch\Component\Http\RouteNotFound;
+use Lunch\Component\Routing\RouteNotFound;
 
 final class UrlGenerator
 {

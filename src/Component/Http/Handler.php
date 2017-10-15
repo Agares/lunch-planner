@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace Lunch\Component\Http;
 
-use Lunch\Component\Form\ViewFactory;
 use Lunch\Component\View\Renderer;
-use Lunch\Infrastructure\InLayoutTemplateRenderer;
-use Lunch\Infrastructure\TemplateRenderer;
 use Psr\Container\ContainerInterface;
 
 // the purpose of this class is to provide everything http/html related that might be needed for an http handler
 // SRP is broken here, but it might be impossible to balance normal amount of constructor arguments in handlers
 // with a sensible API
+
+// todo this breaks if the components listed here are not loaded
 abstract class Handler
 {
 	/**

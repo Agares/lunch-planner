@@ -6,12 +6,13 @@ header('Content-Type: text/html;charset=utf-8');
 
 require_once __DIR__.'/../vendor/autoload.php';
 
-$services = require __DIR__.'/../config/services.php';
-
 $request = \Zend\Diactoros\ServerRequestFactory::fromGlobals();
 
-$containerLoader = new \Lunch\Infrastructure\DI\ContainerLoader();
-$container = $containerLoader->load($services);
+$containerLoader = new \Lunch\Component\Kernel\ContainerLoader();
+
+$componentLoader = new \Lunch\Component\Kernel\ComponentLoader($containerLoader);
+$componentLoader->addComponent(new \Lunch\AppComponent());
+$container = $componentLoader->loadServices();
 
 $routerLoader = new \Lunch\Component\Routing\RouterLoader($container->get('routes'));
 $fastRouteDispatcher = $routerLoader->load();

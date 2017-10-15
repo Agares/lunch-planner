@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Lunch\Infrastructure\DI;
+namespace Lunch\Component\Kernel;
 
 use DI\ContainerBuilder;
 use Psr\Container\ContainerInterface;

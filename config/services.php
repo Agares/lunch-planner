@@ -3,61 +3,50 @@
 declare(strict_types=1);
 
 return [
-	'routes'                                                      => [
+	'routes'                                           => [
 		'literal' => require __DIR__.'/routes.php',
 	],
-	\Mustache_Engine::class                                       => [],
-	\Lunch\Component\Http\ResponseFactory::class                  => [
+	\Lunch\Http\Homepage::class                        => [
 		'parameters' => [
-			\Lunch\Component\Http\DefaultEndpointReferenceResolver::class
-		]
-	],
-	\Lunch\Component\Routing\UrlGenerator::class                  => [
-		'parameters' => [
-			'routes',
+			\Psr\Container\ContainerInterface::class,
 		],
 	],
-	\Lunch\Http\Homepage::class                                   => [
+	\Lunch\Http\CreateLunch::class                     => [
 		'parameters' => [
-			\Psr\Container\ContainerInterface::class
+			\Psr\Container\ContainerInterface::class,
 		],
 	],
-	\Lunch\Http\CreateLunch::class                                => [
+	\Lunch\Http\ShowLunch::class                       => [
 		'parameters' => [
-			\Psr\Container\ContainerInterface::class
+			\Psr\Container\ContainerInterface::class,
 		],
 	],
-	\Lunch\Http\ShowLunch::class                                  => [
+	\Lunch\Http\AddParticipant::class                  => [
 		'parameters' => [
-			\Psr\Container\ContainerInterface::class
+			\Psr\Container\ContainerInterface::class,
 		],
 	],
-	\Lunch\Http\AddParticipant::class                      => [
+	\Lunch\Http\AddPotentialPlace::class               => [
 		'parameters' => [
-			\Psr\Container\ContainerInterface::class
+			\Psr\Container\ContainerInterface::class,
 		],
 	],
-	\Lunch\Http\AddPotentialPlace::class                   => [
+	\Lunch\Http\Vote::class                            => [
 		'parameters' => [
-			\Psr\Container\ContainerInterface::class
+			\Psr\Container\ContainerInterface::class,
 		],
 	],
-	\Lunch\Http\Vote::class                                => [
+	\Lunch\Http\RemoveVote::class                      => [
 		'parameters' => [
-			\Psr\Container\ContainerInterface::class
+			\Psr\Container\ContainerInterface::class,
 		],
 	],
-	\Lunch\Http\RemoveVote::class                          => [
+	\Lunch\Http\ShowResults::class                     => [
 		'parameters' => [
-			\Psr\Container\ContainerInterface::class
+			\Psr\Container\ContainerInterface::class,
 		],
 	],
-	\Lunch\Http\ShowResults::class                         => [
-		'parameters' => [
-			\Psr\Container\ContainerInterface::class
-		],
-	],
-	\Lunch\Infrastructure\CQRS\CommandBus::class           => [
+	\Lunch\Infrastructure\CQRS\CommandBus::class       => [
 		'methodCalls' => [
 			['registerHandler', [\Lunch\Application\CreateLunchHandler::class]],
 			['registerHandler', [\Lunch\Application\AddParticipantHandler::class]],
@@ -66,41 +55,41 @@ return [
 			['registerHandler', [\Lunch\Application\RemoveVoteHandler::class]],
 		],
 	],
-	\Lunch\Application\CreateLunchHandler::class           => [
+	\Lunch\Application\CreateLunchHandler::class       => [
 		'parameters' => [
 			\Lunch\Application\Repository::class,
 		],
 	],
-	\Lunch\Application\AddParticipantHandler::class        => [
+	\Lunch\Application\AddParticipantHandler::class    => [
 		'parameters' => [
 			\Lunch\Application\Repository::class,
 		],
 	],
-	\Lunch\Application\AddPotentialPlaceHandler::class     => [
+	\Lunch\Application\AddPotentialPlaceHandler::class => [
 		'parameters' => [
 			\Lunch\Application\Repository::class,
 		],
 	],
-	\Lunch\Application\VoteHandler::class                  => [
+	\Lunch\Application\VoteHandler::class              => [
 		'parameters' => [
 			\Lunch\Application\Repository::class,
 		],
 	],
-	\Lunch\Application\RemoveVoteHandler::class            => [
+	\Lunch\Application\RemoveVoteHandler::class        => [
 		'parameters' => [
 			\Lunch\Application\Repository::class,
 		],
 	],
-	\Lunch\Application\Repository::class                   => [
+	\Lunch\Application\Repository::class               => [
 		'className' => \Lunch\Infrastructure\PDORepository::class,
 	],
-	\Lunch\Infrastructure\PDORepository::class             => [
+	\Lunch\Infrastructure\PDORepository::class         => [
 		'parameters' => [
 			\PDO::class,
 		],
 	],
-	\Lunch\Infrastructure\UUIDFactory::class               => [],
-	\PDO::class                                                   => [
+	\Lunch\Infrastructure\UUIDFactory::class           => [],
+	\PDO::class                                        => [
 		'create' => function () {
 			$pdo = new \PDO(
 				sprintf('pgsql:host=db;dbname=%s', getenv('POSTGRES_DB')),
@@ -113,48 +102,20 @@ return [
 			return $pdo;
 		},
 	],
-	\Lunch\Infrastructure\CQRS\QueryBus::class                    => [
+	\Lunch\Infrastructure\CQRS\QueryBus::class         => [
 		'methodCalls' => [
 			['registerHandler', [\Lunch\Application\ReadLunchMatrixHandler::class]],
 			['registerHandler', [\Lunch\Application\ReadResultsHandler::class]],
 		],
 	],
-	\Lunch\Application\ReadLunchMatrixHandler::class              => [
+	\Lunch\Application\ReadLunchMatrixHandler::class   => [
 		'parameters' => [
 			\PDO::class,
 		],
 	],
-	\Lunch\Application\ReadResultsHandler::class                  => [
+	\Lunch\Application\ReadResultsHandler::class       => [
 		'parameters' => [
 			\PDO::class,
 		],
 	],
-	\Lunch\Component\Http\DefaultEndpointReferenceResolver::class => [
-		'methodCalls' => [
-			['registerResolver', [\Lunch\Component\Routing\RouteReferenceResolver::class]],
-		],
-	],
-	\Lunch\Component\Routing\RouteReferenceResolver::class        => [
-		'parameters' => [
-			\Lunch\Component\Routing\UrlGenerator::class,
-		],
-	],
-	\Lunch\Component\View\Renderer::class => [
-		'parameters' => [
-			\Lunch\Component\View\TemplateReferenceResolver::class,
-			\Mustache_Engine::class,
-			\Lunch\Component\View\ReferenceResolver::class
-		]
-	],
-	\Lunch\Component\View\ReferenceResolver::class => [
-		'methodCalls' => [
-			['registerResolver', [\Lunch\Component\Http\DefaultEndpointReferenceResolver::class, 'literal:'.\Lunch\Component\Http\EndpointReference::class ]]
-		]
-	],
-	\Lunch\Component\View\TemplateReferenceResolver::class => [
-		'methodCalls' => [
-			['registerHandler', [\Lunch\Component\View\FilesystemTemplateReferenceResolver::class]]
-		]
-	],
-	\Lunch\Component\View\FilesystemTemplateReferenceResolver::class => []
 ];
